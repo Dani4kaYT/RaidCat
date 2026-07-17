@@ -16,7 +16,11 @@
     body { font-family: 'Segoe UI', system-ui, sans-serif; scroll-behavior: smooth; }
     .minecraft { font-family: 'Press Start 2P', sans-serif; }
     .neon-purple { text-shadow: 0 0 25px #c026d3, 0 0 50px #7e22ce; }
-    .tab-active { border-bottom: 4px solid #c026d3; color: white; }
+    .tab-active { 
+      border-bottom: 4px solid #c026d3; 
+      color: white; 
+      position: relative;
+    }
     .social-icon:hover { transform: scale(1.3) rotate(8deg); filter: brightness(1.4); }
   </style>
 </head>
@@ -26,7 +30,7 @@
   <header class="bg-black/95 border-b border-purple-900 sticky top-0 z-50 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
       <a href="#home" class="flex items-center gap-4">
-        <img src="https://cdn.discordapp.com/attachments/1492498437935993062/1527062663509573734/avatarHead3.png?ex=6a5b45ae&is=6a59f42e&hm=426c94be297cd675123532ca4ebfe3eec439d4f634853e931cd19390cef2e53d&" 
+        <img src="https://cdn.discordapp.com/attachments/1492498437935993062/1527061338214633522/ChatGPT_Image_15_._2026_._23_46_46.png?ex=6a5b4472&is=6a59f2f2&hm=6b11567c69be4e9cf78ac945fde57924fbda22fb6fc2a9be2f158fa39bde38b9&" 
              class="h-12" alt="RaidCat Logo">
         <h1 class="text-4xl font-black minecraft neon-purple tracking-widest">RAIDCAT</h1>
       </a>
@@ -42,11 +46,9 @@
   <!-- HERO -->
   <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-purple-950 via-black to-zinc-950">
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,#6b21a8_0%,transparent_70%)]"></div>
-    
     <div class="relative text-center z-10 px-6">
-      <img src="https://cdn.discordapp.com/attachments/1492498437935993062/1527061338214633522/ChatGPT_Image_15_._2026_._23_46_46.png?ex=6a594a32&is=6a57f8b2&hm=cb4d805cd557980a2636f469759b358cf4bc7c2eab375b7cbcb8c14fb92de702&" 
+      <img src="https://cdn.discordapp.com/attachments/1492498437935993062/1527061338214633522/ChatGPT_Image_15_._2026_._23_46_46.png?ex=6a5b4472&is=6a59f2f2&hm=6b11567c69be4e9cf78ac945fde57924fbda22fb6fc2a9be2f158fa39bde38b9&" 
            class="w-72 h-72 mx-auto rounded-3xl border-4 border-purple-400 shadow-2xl shadow-purple-600 mb-10" alt="RaidCat">
-      
       <h1 class="text-8xl font-black minecraft neon-purple tracking-widest mb-4">RAIDCAT</h1>
       <p class="text-2xl text-purple-200">Minecraft (и не только)</p>
     </div>
@@ -82,19 +84,38 @@
   </footer>
 
   <script>
-    window.addEventListener('scroll', () => {
-      const sections = ['home', 'about', 'community'];
+    // Улучшенный скрипт для активной вкладки
+    function updateActiveTab() {
+      const sections = [
+        {id: 'home', nav: 0},
+        {id: 'about', nav: 1},
+        {id: 'community', nav: 2}
+      ];
+      
       const navLinks = document.querySelectorAll('.tab-btn');
-      let current = 'home';
-      sections.forEach(id => {
-        const sec = document.getElementById(id);
-        if (sec && window.scrollY >= sec.offsetTop - 200) current = id;
+      let currentIndex = 0;
+
+      for (let i = 0; i < sections.length; i++) {
+        const section = document.getElementById(sections[i].id);
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 150) {
+            currentIndex = i;
+          }
+        }
+      }
+
+      navLinks.forEach((link, index) => {
+        if (index === currentIndex) {
+          link.classList.add('tab-active');
+        } else {
+          link.classList.remove('tab-active');
+        }
       });
-      navLinks.forEach(link => {
-        link.classList.remove('tab-active');
-        if (link.getAttribute('href') === `#${current}`) link.classList.add('tab-active');
-      });
-    });
+    }
+
+    window.addEventListener('scroll', updateActiveTab);
+    window.addEventListener('load', updateActiveTab);
   </script>
 </body>
 </html>
