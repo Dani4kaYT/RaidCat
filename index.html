@@ -17,7 +17,7 @@
     .neon-purple { text-shadow: 0 0 25px #c026d3, 0 0 50px #7e22ce; }
     .tab-active { 
       border-bottom: 4px solid #c026d3 !important; 
-      color: white !important; 
+      color: white !important;
     }
     .social-icon:hover { transform: scale(1.3) rotate(8deg); filter: brightness(1.4); }
   </style>
@@ -81,32 +81,37 @@
   </footer>
 
   <script>
-    function updateActiveTab() {
-      const navLinks = document.querySelectorAll('.tab-btn');
-      const scrollPosition = window.scrollY + 200;
+    const navLinks = document.querySelectorAll('.tab-btn');
 
-      // Главная
-      if (scrollPosition < document.getElementById('about').offsetTop) {
+    // При клике сразу подсвечиваем
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.forEach(l => l.classList.remove('tab-active'));
+        link.classList.add('tab-active');
+      });
+    });
+
+    // При скролле тоже обновляем
+    function updateOnScroll() {
+      const scrollY = window.scrollY + 180;
+      
+      if (scrollY < document.getElementById('about').offsetTop) {
         navLinks[0].classList.add('tab-active');
         navLinks[1].classList.remove('tab-active');
         navLinks[2].classList.remove('tab-active');
-      } 
-      // О канале
-      else if (scrollPosition < document.getElementById('community').offsetTop) {
+      } else if (scrollY < document.getElementById('community').offsetTop) {
         navLinks[1].classList.add('tab-active');
         navLinks[0].classList.remove('tab-active');
         navLinks[2].classList.remove('tab-active');
-      } 
-      // Сообщество
-      else {
+      } else {
         navLinks[2].classList.add('tab-active');
         navLinks[0].classList.remove('tab-active');
         navLinks[1].classList.remove('tab-active');
       }
     }
 
-    window.addEventListener('scroll', updateActiveTab);
-    window.addEventListener('load', updateActiveTab);
+    window.addEventListener('scroll', updateOnScroll);
+    window.addEventListener('load', updateOnScroll);
   </script>
 </body>
 </html>
