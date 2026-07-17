@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RaidCat</title>
   
-  <!-- FAVICON -->
-  <link rel="icon" href="https://cdn.discordapp.com/attachments/1492498437935993062/1527062663509573734/avatarHead3.png?ex=6a5b45ae&is=6a59f42e&hm=426c94be297cd675123532ca4ebfe3eec439d4f634853e931cd19390cef2e53d&v=7" type="image/png">
+  <link rel="icon" href="https://cdn.discordapp.com/attachments/1492498437935993062/1527062663509573734/avatarHead3.png?ex=6a5b45ae&is=6a59f42e&hm=426c94be297cd675123532ca4ebfe3eec439d4f634853e931cd19390cef2e53d&v=8" type="image/png">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -15,22 +14,18 @@
     body { font-family: 'Segoe UI', system-ui, sans-serif; scroll-behavior: smooth; }
     .minecraft { font-family: 'Press Start 2P', sans-serif; }
     .neon-purple { text-shadow: 0 0 25px #c026d3, 0 0 50px #7e22ce; }
+    
     .tab-active { 
       border-bottom: 4px solid #c026d3 !important; 
       color: white !important;
     }
 
-    /* Параллакс */
-    #hero-bg {
-      background-image: radial-gradient(circle at center, #6b21a8 0%, transparent 70%);
-      transition: transform 0.15s ease-out;
-    }
+    #hero-bg { transition: transform 0.2s ease-out; }
 
-    /* Анимация появления/исчезновения */
     .animate-on-scroll {
       opacity: 0;
       transform: translateY(60px);
-      transition: all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+      transition: all 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
     .animate-on-scroll.visible {
       opacity: 1;
@@ -50,16 +45,16 @@
       </a>
       
       <nav class="flex gap-8 text-lg font-medium">
-        <a href="#home" class="tab-btn tab-active pb-1">Главная</a>
-        <a href="#about" class="tab-btn pb-1 hover:text-purple-400 transition">О канале</a>
-        <a href="#community" class="tab-btn pb-1 hover:text-purple-400 transition">Сообщество</a>
+        <a href="#home" class="tab-btn pb-1">Главная</a>
+        <a href="#about" class="tab-btn pb-1">О канале</a>
+        <a href="#community" class="tab-btn pb-1">Сообщество</a>
       </nav>
     </div>
   </header>
 
-  <!-- HERO с параллаксом -->
+  <!-- HERO -->
   <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
-    <div id="hero-bg" class="absolute inset-0"></div>
+    <div id="hero-bg" class="absolute inset-0 bg-[radial-gradient(circle_at_center,#6b21a8_0%,transparent_70%)]"></div>
     <div class="relative text-center z-10 px-6">
       <img src="https://cdn.discordapp.com/attachments/1492498437935993062/1527061338214633522/ChatGPT_Image_15_._2026_._23_46_46.png?ex=6a5b4472&is=6a59f2f2&hm=6b11567c69be4e9cf78ac945fde57924fbda22fb6fc2a9be2f158fa39bde38b9&" 
            class="w-72 h-72 mx-auto rounded-3xl border-4 border-purple-400 shadow-2xl shadow-purple-600 mb-10" alt="RaidCat">
@@ -97,62 +92,53 @@
   </footer>
 
   <script>
-    // Параллакс
-    const heroBg = document.getElementById('hero-bg');
-    window.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth) * 25 - 12.5;
-      const y = (e.clientY / window.innerHeight) * 25 - 12.5;
-      heroBg.style.transform = `translate(${x}px, ${y}px)`;
-    });
-
-    // Анимация появления/исчезновения
-    function handleAnimations() {
-      document.querySelectorAll('.animate-on-scroll').forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.85 && rect.bottom > 100) {
-          el.classList.add('visible');
-        } else {
-          el.classList.remove('visible');
-        }
-      });
-    }
-
-    // Активная вкладка
-    function updateActiveTab() {
-      const navLinks = document.querySelectorAll('.tab-btn');
-      const scrollY = window.scrollY + 180;
-
-      if (scrollY < document.getElementById('about').offsetTop) {
-        navLinks[0].classList.add('tab-active');
-        navLinks[1].classList.remove('tab-active');
-        navLinks[2].classList.remove('tab-active');
-      } else if (scrollY < document.getElementById('community').offsetTop) {
-        navLinks[1].classList.add('tab-active');
-        navLinks[0].classList.remove('tab-active');
-        navLinks[2].classList.remove('tab-active');
-      } else {
-        navLinks[2].classList.add('tab-active');
-        navLinks[0].classList.remove('tab-active');
-        navLinks[1].classList.remove('tab-active');
-      }
-    }
+    const navLinks = document.querySelectorAll('.tab-btn');
 
     // Клик
-    document.querySelectorAll('.tab-btn').forEach(link => {
+    navLinks.forEach(link => {
       link.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(l => l.classList.remove('tab-active'));
+        navLinks.forEach(l => l.classList.remove('tab-active'));
         link.classList.add('tab-active');
       });
     });
 
-    window.addEventListener('scroll', () => {
-      handleAnimations();
-      updateActiveTab();
+    // Intersection Observer для скролла
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => link.classList.remove('tab-active'));
+          
+          if (entry.target.id === 'home') navLinks[0].classList.add('tab-active');
+          else if (entry.target.id === 'about') navLinks[1].classList.add('tab-active');
+          else if (entry.target.id === 'community') navLinks[2].classList.add('tab-active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    // Наблюдаем за секциями
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
     });
 
-    window.addEventListener('load', () => {
-      handleAnimations();
-      updateActiveTab();
+    // Параллакс
+    const heroBg = document.getElementById('hero-bg');
+    window.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth) * 30 - 15;
+      const y = (e.clientY / window.innerHeight) * 30 - 15;
+      heroBg.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    // Анимация блоков
+    const animObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+      animObserver.observe(el);
     });
   </script>
 </body>
