@@ -6,7 +6,7 @@
   <title>RaidCat</title>
   
   <!-- FAVICON -->
-  <link rel="icon" href="https://cdn.discordapp.com/attachments/1492498437935993062/1527062663509573734/avatarHead3.png?ex=6a5b45ae&is=6a59f42e&hm=426c94be297cd675123532ca4ebfe3eec439d4f634853e931cd19390cef2e53d&v=6" type="image/png">
+  <link rel="icon" href="https://cdn.discordapp.com/attachments/1492498437935993062/1527062663509573734/avatarHead3.png?ex=6a5b45ae&is=6a59f42e&hm=426c94be297cd675123532ca4ebfe3eec439d4f634853e931cd19390cef2e53d&v=7" type="image/png">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -19,7 +19,23 @@
       border-bottom: 4px solid #c026d3 !important; 
       color: white !important;
     }
-    .social-icon:hover { transform: scale(1.3) rotate(8deg); filter: brightness(1.4); }
+
+    /* Параллакс фон */
+    #hero-bg {
+      background-image: radial-gradient(circle at center, #6b21a8 0%, transparent 70%);
+      transition: transform 0.1s ease-out;
+    }
+
+    /* Анимация блоков */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100">
@@ -41,9 +57,10 @@
     </div>
   </header>
 
-  <!-- HERO -->
-  <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-purple-950 via-black to-zinc-950">
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,#6b21a8_0%,transparent_70%)]"></div>
+  <!-- HERO с параллаксом -->
+  <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div id="hero-bg" class="absolute inset-0 bg-[radial-gradient(circle_at_center,#6b21a8_0%,transparent_70%)]"></div>
+    
     <div class="relative text-center z-10 px-6">
       <img src="https://cdn.discordapp.com/attachments/1492498437935993062/1527061338214633522/ChatGPT_Image_15_._2026_._23_46_46.png?ex=6a5b4472&is=6a59f2f2&hm=6b11567c69be4e9cf78ac945fde57924fbda22fb6fc2a9be2f158fa39bde38b9&" 
            class="w-72 h-72 mx-auto rounded-3xl border-4 border-purple-400 shadow-2xl shadow-purple-600 mb-10" alt="RaidCat">
@@ -54,7 +71,7 @@
 
   <!-- О канале -->
   <section id="about" class="py-28 bg-zinc-900">
-    <div class="max-w-4xl mx-auto px-6">
+    <div class="max-w-4xl mx-auto px-6 animate-on-scroll">
       <h2 class="text-5xl font-bold mb-12 text-center">О канале</h2>
       <div class="bg-zinc-950 border border-purple-800 rounded-3xl p-14 text-lg leading-relaxed text-zinc-200">
         Привет, добро пожаловать на мой канал! Тут видео по Майнкрафту (и не только). Подписывайся, если интересен такой контент. Рад каждому!
@@ -64,7 +81,7 @@
 
   <!-- Сообщество -->
   <section id="community" class="py-32 bg-zinc-950">
-    <div class="max-w-4xl mx-auto px-6 text-center">
+    <div class="max-w-4xl mx-auto px-6 text-center animate-on-scroll">
       <h2 class="text-5xl font-bold mb-12">Присоединяйся к нам</h2>
       <p class="text-xl text-zinc-400 mb-16">Общаемся, делимся постройками и просто отдыхаем вместе</p>
       
@@ -81,20 +98,29 @@
   </footer>
 
   <script>
-    const navLinks = document.querySelectorAll('.tab-btn');
-
-    // При клике сразу подсвечиваем
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.forEach(l => l.classList.remove('tab-active'));
-        link.classList.add('tab-active');
-      });
+    // Параллакс
+    const heroBg = document.getElementById('hero-bg');
+    window.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth) * 20 - 10;
+      const y = (e.clientY / window.innerHeight) * 20 - 10;
+      heroBg.style.transform = `translate(${x}px, ${y}px)`;
     });
 
-    // При скролле тоже обновляем
-    function updateOnScroll() {
-      const scrollY = window.scrollY + 180;
-      
+    // Анимация появления
+    function handleScrollAnimation() {
+      document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 0.8) {
+          el.classList.add('visible');
+        }
+      });
+    }
+
+    // Активная вкладка
+    function updateActiveTab() {
+      const navLinks = document.querySelectorAll('.tab-btn');
+      const scrollY = window.scrollY + 200;
+
       if (scrollY < document.getElementById('about').offsetTop) {
         navLinks[0].classList.add('tab-active');
         navLinks[1].classList.remove('tab-active');
@@ -110,8 +136,23 @@
       }
     }
 
-    window.addEventListener('scroll', updateOnScroll);
-    window.addEventListener('load', updateOnScroll);
+    // Клик по вкладкам
+    document.querySelectorAll('.tab-btn').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(l => l.classList.remove('tab-active'));
+        link.classList.add('tab-active');
+      });
+    });
+
+    window.addEventListener('scroll', () => {
+      handleScrollAnimation();
+      updateActiveTab();
+    });
+
+    window.addEventListener('load', () => {
+      handleScrollAnimation();
+      updateActiveTab();
+    });
   </script>
 </body>
 </html>
