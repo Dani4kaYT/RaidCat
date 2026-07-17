@@ -10,7 +10,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
     body { font-family: 'Segoe UI', system-ui, sans-serif; scroll-behavior: smooth; }
     .minecraft { font-family: 'Press Start 2P', sans-serif; }
-    .neon-purple { text-shadow: 0 0 20px #c026d3, 0 0 40px #7e22ce; }
+    .neon-purple { text-shadow: 0 0 25px #c026d3, 0 0 50px #7e22ce; }
     .tab-active { border-bottom: 4px solid #c026d3; color: white; }
     .social-icon:hover { transform: scale(1.3) rotate(8deg); filter: brightness(1.4); }
   </style>
@@ -18,10 +18,10 @@
 <body class="bg-zinc-950 text-zinc-100">
 
   <!-- HEADER -->
-  <header class="bg-black border-b border-purple-900 sticky top-0 z-50">
+  <header class="bg-black/90 border-b border-purple-900 sticky top-0 z-50 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
       <a href="#home" class="flex items-center gap-3">
-        <img src="https://cdn.discordapp.com/attachments/1492498437935993062/1527062663509573734/avatarHead3.png?ex=6a5b45ae&is=6a59f42e&hm=426c94be297cd675123532ca4ebfe3eec439d4f634853e931cd19390cef2e53d&" class="h-14" alt="RaidCat Logo"> <!-- Замени на свой логотип -->
+        <img src="https://cdn.discordapp.com/attachments/1492498437935993062/1527062663509573734/avatarHead3.png?ex=6a5b45ae&is=6a59f42e&hm=426c94be297cd675123532ca4ebfe3eec439d4f634853e931cd19390cef2e53d&" class="h-12" alt="Logo"> <!-- Замени -->
       </a>
       <nav class="flex gap-8 text-lg font-medium">
         <a href="#home" class="tab-active pb-1 tab-btn">Главная</a>
@@ -31,73 +31,61 @@
     </div>
   </header>
 
-  <!-- HERO -->
-  <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,#6b21a8_0%,transparent_65%)]"></div>
+  <!-- HERO - Сделал как на скрине -->
+  <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-purple-950 via-black to-zinc-950">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,#6b21a8_0%,transparent_70%)]"></div>
+    
     <div class="relative text-center z-10 px-6">
       <img src="https://cdn.discordapp.com/attachments/1492498437935993062/1527061338214633522/ChatGPT_Image_15_._2026_._23_46_46.png?ex=6a594a32&is=6a57f8b2&hm=cb4d805cd557980a2636f469759b358cf4bc7c2eab375b7cbcb8c14fb92de702&" 
-           class="w-64 h-64 mx-auto rounded-3xl border-4 border-purple-400 shadow-2xl shadow-purple-600 mb-8" alt="RaidCat">
-      <h1 class="text-7xl font-black minecraft neon-purple tracking-widest">RAIDCAT</h1>
-      <p class="text-2xl text-purple-200 mt-3">Minecraft (и не только)</p>
+           class="w-72 h-72 mx-auto rounded-3xl border-4 border-purple-400 shadow-2xl shadow-purple-600 mb-10" alt="RaidCat">
+      
+      <h1 class="text-8xl font-black minecraft neon-purple tracking-widest mb-4">RAIDCAT</h1>
+      <p class="text-2xl text-purple-200">Minecraft (и не только)</p>
     </div>
   </section>
 
-  <!-- О КАНАЛЕ -->
+  <!-- О канале -->
   <section id="about" class="py-28 bg-zinc-900">
     <div class="max-w-4xl mx-auto px-6">
       <h2 class="text-5xl font-bold mb-12 text-center">О канале</h2>
       <div class="bg-zinc-950 border border-purple-800 rounded-3xl p-14 text-lg leading-relaxed text-zinc-200">
-        <p class="mb-6">Привет, добро пожаловать на мой канал! Тут видео по Майнкрафту (и не только).</p>
-        <p>Подписывайся, если интересен такой контент. Рад каждому новому зрителю!</p>
+        Привет, добро пожаловать на мой канал! Тут видео по Майнкрафту (и не только). Подписывайся, если интересен такой контент. Рад каждому!
       </div>
     </div>
   </section>
 
-  <!-- СООБЩЕСТВО -->
-  <section id="community" class="py-28">
+  <!-- Сообщество -->
+  <section id="community" class="py-28 bg-zinc-950">
     <div class="max-w-4xl mx-auto px-6 text-center">
       <h2 class="text-5xl font-bold mb-12">Присоединяйся к нам</h2>
-      <p class="text-xl text-zinc-400 mb-16 max-w-2xl mx-auto">
-        Общаемся, делимся крутыми постройками, обсуждаем моды и просто хорошо проводим время вместе с сообществом.
-      </p>
+      <p class="text-xl text-zinc-400 mb-16">Общаемся, делимся постройками и просто отдыхаем вместе</p>
       
-      <div class="flex justify-center gap-16 text-7xl mb-20">
+      <div class="flex justify-center gap-16 text-7xl">
         <a href="https://youtube.com/@RaidCat" target="_blank" class="social-icon text-red-500"><i class="fab fa-youtube"></i></a>
         <a href="https://t.me/DanyaX13TG2" target="_blank" class="social-icon text-sky-400"><i class="fab fa-telegram"></i></a>
-        <a href="https://discord.gg/твой_инвайт" target="_blank" class="social-icon text-indigo-400"><i class="fab fa-discord"></i></a>
+        <a href="https://discord.gg/NRf8rabJHS" target="_blank" class="social-icon text-indigo-400"><i class="fab fa-discord"></i></a>
       </div>
     </div>
   </section>
 
-  <!-- Футер -->
-  <footer class="bg-black border-t border-purple-900 py-16 text-center text-zinc-500">
-    <p class="text-lg">© RaidCat • 2026 • Все пиксели на месте</p>
+  <footer class="bg-black py-12 text-center text-zinc-500 border-t border-purple-900">
+    <p>© RaidCat • 2026</p>
   </footer>
 
   <script>
-    // Активная вкладка при скролле и клике
-    function updateActiveTab() {
+    window.addEventListener('scroll', () => {
       const sections = ['home', 'about', 'community'];
       const navLinks = document.querySelectorAll('.tab-btn');
-      
       let current = 'home';
       sections.forEach(id => {
-        const section = document.getElementById(id);
-        if (section && window.scrollY >= section.offsetTop - 250) {
-          current = id;
-        }
+        const sec = document.getElementById(id);
+        if (sec && window.scrollY >= sec.offsetTop - 200) current = id;
       });
-
       navLinks.forEach(link => {
         link.classList.remove('tab-active');
-        if (link.getAttribute('href') === `#${current}`) {
-          link.classList.add('tab-active');
-        }
+        if (link.getAttribute('href') === `#${current}`) link.classList.add('tab-active');
       });
-    }
-
-    window.addEventListener('scroll', updateActiveTab);
-    window.addEventListener('load', updateActiveTab);
+    });
   </script>
 </body>
 </html>
